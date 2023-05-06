@@ -1,15 +1,28 @@
-// wiki.js - Wiki route module.
-
 var express = require('express');
-var router = express.Router();
 const cors = require('cors');
 var app = express();
-var router = express.Router();
 const bodyParser = require('body-parser');
 const db = require('./db');
+const RoutesUser = require('./routes/chambre');
+
 app.use(cors());
 app.use(express.json());
-// Home page route.
+
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
+  next();
+});
+
+//app.use(('/user'),require(RoutesUser));
+
+//route
+
+
+
+/*
+
 router.get('/', function (req, res) {
   res.send('welcome to home page');
 })
@@ -19,15 +32,15 @@ router.get('/about', function (req, res) {
   res.send('simple demo of express for IG3');
 })
 
-router.get('/user', function(req,res,next){ // get all festival
+router.get('/users', function(req,res,next){ // get all festival
   // console.log("get all festival");
-  db.queryAllOrdered('user','lastname',function(result){
+  db.queryAllOrdered('users','lastname',function(result){
       // console.log(result);
       res.send(result);
   });
 });
-
-
+*/
+/*
 // ----------------------------------------------------
 // ---------- get one particular value
 
@@ -48,11 +61,10 @@ router.post('/user/oui/:id',function(req,res,next){
         res.send(result);
     });
 });
+*/
 
 
-module.exports = router;
-
-app.use("/",router);
+app.use("/",RoutesUser);
 app.listen(8000,function(){
   console.log("Live at Port 8000");
 });

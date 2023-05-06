@@ -16,5 +16,9 @@
   "bugs": {
     "url": "https://github.com/thomasc21/ProjetWebBackend/issues"
   },
-  "homepage": "https://github.com/thomasc21/ProjetWebBackend#readme"
+  "homepage": "https://github.com/thomasc21/ProjetWebBackend#readme",
+  "dependencies": {
+    "bcrypt": "^5.1.0",
+    "mysql-schema": "^1.0.0"
+  }
 }

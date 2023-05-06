@@ -1,8 +1,10 @@
-const mysql = require('mysql');
+/*var mysql = require('mysql');
 
-const thingSchema = mysql.Schema({
+var Schema = mysql.getSchema();
+
+var thingSchema = new Schema({
     idusers: { type: String, required: true, unique: true },
     password: { type: String, required: true },
 });
 
-module.exports = mysql.model('user', thingSchema);
+module.exports = mysql.model('user', thingSchema);*/
