@@ -30,7 +30,7 @@ exports.queryData = function(request,callback){
          }
      });
  }
-
+/*
 exports.queryAll = function(table,callback){
     this.queryData(`SELECT * FROM ${table}`, callback);
 }
@@ -53,4 +53,4 @@ exports.Chambre = function(table,callback){
 
 
 
-//connection.end();
+//connection.end();*/

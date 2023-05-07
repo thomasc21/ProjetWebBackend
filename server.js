@@ -1,9 +1,11 @@
 var express = require('express');
 const cors = require('cors');
 var app = express();
-const bodyParser = require('body-parser');
-const db = require('./db');
-const RoutesUser = require('./routes/chambre');
+
+
+const RoutesUser = require('./routes/user');
+const RouteChambre = require('./routes/chambre');
+const RouteVelo = require('./routes/velo');
 
 app.use(cors());
 app.use(express.json());
@@ -64,7 +66,12 @@ router.post('/user/oui/:id',function(req,res,next){
 */
 
 
-app.use("/",RoutesUser);
+//route 
+app.use("/user",RoutesUser);
+app.use("/chambre",RouteChambre);
+app.use("/velo",RouteVelo);
+
+
 app.listen(8000,function(){
   console.log("Live at Port 8000");
 });

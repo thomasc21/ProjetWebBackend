@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const ChambreCtr = require('../controlleurs/chambre');
+const VeloCtr = require('../controlleurs/velo');
 
-router.get('', ChambreCtr.queryAll);
+router.get('', VeloCtr.queryAll);
 
 
 module.exports = router;

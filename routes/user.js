@@ -9,5 +9,6 @@ router.post('/signup', userCtrl.signup);
 //router.get('/login', userCtrl.login);
 
 //router.get('/AllUser', userCtrl.queryAll);
+router.get('', userCtrl.queryAll);
 
 module.exports = router;
