@@ -11,12 +11,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
-app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
-  next();
-});
+
 
 //app.use(('/user'),require(RoutesUser));
 
@@ -72,6 +67,9 @@ app.use("/user",RoutesUser);
 app.use("/chambre",RouteChambre);
 app.use("/velo",RouteVelo);
 
+app.use((req, res, next) => {
+  next(createError(404));
+});
 
 app.listen(8000,function(){
   console.log("Live at Port 8000");

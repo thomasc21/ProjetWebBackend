@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const ChambreCtr = require('../controlleurs/chambre');
+const ChambreCtr = require('../controlleurs/ReservationChambre');
 
 //get all bedrooms
 router.get('', ChambreCtr.queryAll);

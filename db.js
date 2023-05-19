@@ -1,6 +1,7 @@
 const e = require('express');
 var mysql = require('mysql');
-const routeC = require('./routes/chambre');
+require('dotenv').config();
+
 
 var connectionPool = null;
 function getConnection(){
@@ -8,10 +9,10 @@ function getConnection(){
       console.log("init connectionPool");
       connectionPool = mysql.createPool({
          connectionLimit: 10,
-         host     : 'localhost',
-         user     : 'root',
-         password : 'root',
-         database: 'projetweb'
+         host     : process.env.DB_HOST,
+         user     : process.env.DB_USER,
+         password : process.env.DB_PASS,
+         database: process.env.DB_NAME
       })      
    }
    return connectionPool;
@@ -22,7 +23,8 @@ function getConnection(){
 
 
 
-exports.queryData = function(request,callback){
+exports.queryData = async function(request,callback){
+  try{
     getConnection().query(request,function(err,result){
          if(err) console.log(err);
          if (typeof callback === 'function') {
@@ -30,25 +32,9 @@ exports.queryData = function(request,callback){
          }
      });
  }
-/*
-exports.queryAll = function(table,callback){
-    this.queryData(`SELECT * FROM ${table}`, callback);
-}
-
-exports.queryAllOrdered = function(table,order,callback){
-    this.queryData(`SELECT * FROM ${table} ORDER BY idusers`, callback);
-}
-
-exports.queryValue = function(table,property,key,callback){
-    this.queryData(`SELECT * FROM ${table} WHERE ${property}=${key}`, callback);
-}
-
-exports.sendData = function(id,pass,callback){
-    this.queryData(`INSERT INTO users (idusers,password) VALUES(${id},"${pass}")`,callback); //probleme avec les guillemets cast en string
-}
-
-exports.Chambre = function(table,callback){
-    this.queryData(routeC, callback);
+ catch(err){
+      console.log(err);
+  }
 }
 
 
