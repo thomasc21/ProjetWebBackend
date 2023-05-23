@@ -6,6 +6,8 @@ var app = express();
 const RoutesUser = require('./routes/user');
 const RouteChambre = require('./routes/chambre');
 const RouteVelo = require('./routes/velo');
+const RouteReservationChambre = require('./routes/ReservationChambre');
+const RouteReservationVelo = require('./routes/ReservationVelo');
 
 app.use(cors());
 app.use(express.json());
@@ -66,6 +68,8 @@ router.post('/user/oui/:id',function(req,res,next){
 app.use("/user",RoutesUser);
 app.use("/chambre",RouteChambre);
 app.use("/velo",RouteVelo);
+app.use("/reservationChambre",RouteReservationChambre);
+app.use("/reservationVelo",RouteReservationVelo);
 
 app.use((req, res, next) => {
   next(createError(404));

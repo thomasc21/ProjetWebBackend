@@ -34,7 +34,7 @@ exports.login = async function (req, res) {
     //console.log(req);
     const id = req.body.idusers;
     const pass = req.body.password;
-    //console.log(id);
+    console.log(id);
     //console.log(pass);
     try {
     db.queryData(`SELECT idusers,password FROM users where email = "${id}"`, async function (result) {
@@ -45,9 +45,11 @@ exports.login = async function (req, res) {
         }
         else {
 
-            var storedHash = result[0].password;
+            //var storedHash = result[0].password;
             //console.log(storedHash);
-            bcrypt.compare(pass, storedHash, async function (err, match) {
+            //storedHash = bcrypt.hashSync(storedHash, 10, );
+            //console.log(storedHash);
+            bcrypt.compare(pass, result[0].password, async function (err, match) {
                 try{
                     if (err) {
                         console.log(err);
@@ -56,7 +58,8 @@ exports.login = async function (req, res) {
                     else if (match) {
                         //res.send("Connexion réussiiiie");
                         console.log("Connexion réussie");
-                        const token = await jwt.generateToken(result[0].idusers);
+                        //console.log(id);
+                        const token = await jwt.generateToken(id);
                         //console.log(token);
                         res.json({'token' : token});
                         //result(null, res[0]);
