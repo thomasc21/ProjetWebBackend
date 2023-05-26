@@ -1,7 +1,11 @@
-const e = require('express');
-var mysql = require('mysql');
-require('dotenv').config();
+const mysql = require('mysql2');
+const dotenv = require('dotenv');
+dotenv.config();
 
+const url = require('url');
+
+const dbUrl = process.env.DATABASE_URL; // assuming this is where you have stored the DSN
+const params = url.parse(dbUrl);
 
 var connectionPool = null;
 function getConnection(){
@@ -9,10 +13,12 @@ function getConnection(){
       console.log("init connectionPool");
       connectionPool = mysql.createPool({
          connectionLimit: 10,
-         host     : process.env.DB_HOST,
-         user     : process.env.DB_USER,
-         password : process.env.DB_PASS,
-         database: process.env.DB_NAME
+         host: params.hostname,
+         user: params.auth.split(':')[0],
+         password: params.auth.split(':')[1],
+         database: params.pathname.slice(1),
+         port: params.port,
+
       })      
    }
    return connectionPool;
