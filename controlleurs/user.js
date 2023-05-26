@@ -99,7 +99,7 @@ exports.queryById = function (req, res) {
 exports.queryAll = function (req, res) {
     db.queryData(`SELECT * FROM users`, function (result) {
         res.send(result);
-        //console.log(result);
+        console.log(result);
     });
 };
 
