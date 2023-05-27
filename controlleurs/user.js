@@ -44,11 +44,6 @@ exports.login = async function (req, res) {
             res.send("Utilisateur non trouvé");
         }
         else {
-
-            //var storedHash = result[0].password;
-            //console.log(storedHash);
-            //storedHash = bcrypt.hashSync(storedHash, 10, );
-            //console.log(storedHash);
             bcrypt.compare(pass, result[0].password, async function (err, match) {
                 try{
                     if (err) {
@@ -62,9 +57,6 @@ exports.login = async function (req, res) {
                         const token = await jwt.generateToken(id);
                         //console.log(token);
                         res.json({'token' : token});
-                        //result(null, res[0]);
-                        // not found User with the email
-                        //result({ kind: "not_found" }, null);
                     } 
                     else {
                         res.send("Mot de passe incorrect");

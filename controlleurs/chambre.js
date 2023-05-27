@@ -19,14 +19,23 @@ exports.add = function(req,callback){
     db.queryData(`SELECT COUNT(*) FROM Chambre`, function(result){
         NbChambre = result[0]['COUNT(*)']+1;
     db.queryData(`INSERT INTO Chambre (idChambre,NomChambre,TypeChambre,PrixChambre) VALUES(${NbChambre},"${req.body.NomChambre}","${req.body.TypeChambre}","${req.body.PrixChambre}")`,callback); //probleme avec les guillemets cast en string
-    console.log("add chambre");
+    if (callback){
+        console.log("Probleme avec la requete");
+    }else{
+        console.log("add chambre");
+    }
+    
+    
 }
 );
 }
 
 exports.queryById = function(req, res){
-    db.queryData(`SELECT * FROM Chambre where NomChambre = ${req.body.id}`, function(result){
+    db.queryData(`SELECT * FROM Chambre where NomChambre = ${req.body.id}`, (err,res)=>{
+        if (err) throw err;
+        else{
         res.send(result);
+        }
     }
     );
 };
@@ -34,17 +43,23 @@ exports.queryById = function(req, res){
 exports.update = function(req, res){
     const NomChambre = req.body.NomChambre;
     //console.log(NomChambre);
-    db.queryData(`UPDATE Chambre SET NomChambre = "${NomChambre}" WHERE idChambre = ${req.body.idChambre}`, function(result){
+    db.queryData(`UPDATE Chambre SET NomChambre = "${NomChambre}" WHERE idChambre = ${req.body.idChambre}`, (err,res)=>{
+        if (err) throw err;
+        else{
         res.send(result);
         console.log("update chambre");
+        }
     }
     );
 };
 
 exports.delete = function(req, res){
-    db.queryData(`DELETE FROM Chambre WHERE idChambre = ${req.body.id}`, function(result){
+    db.queryData(`DELETE FROM Chambre WHERE idChambre = ${req.body.id}`, (err,res)=>{
+        if (err) throw err;
+        else{
         res.send(result);
         console.log("delete chambre");
+        }
     }
     );
 }
