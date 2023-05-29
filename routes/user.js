@@ -17,11 +17,9 @@ router.get('', userCtrl.queryAll);
 //get user by id
 router.get('/:id_user', userCtrl.queryById);
 
-//update user by id
-router.put('/:id_user', userCtrl.update);
-
 //delete user by id
 router.delete('/:id_user', userCtrl.delete);
 
+router.put('/password', userCtrl.updatePassword);
 
 module.exports = router;

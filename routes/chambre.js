@@ -6,13 +6,13 @@ const ChambreCtr = require('../controlleurs/chambre');
 router.get('', ChambreCtr.queryAll);
 
 //get bedroom by id
-router.get('/:id_chambre', ChambreCtr.queryById);
+router.get('/id', ChambreCtr.queryById);
 
 //update bedroom by id
-router.put('/:id_chambre', ChambreCtr.update);
+router.put('/update', ChambreCtr.update);
 
 //delete bedroom by id
-router.delete('/:id_chambre', ChambreCtr.delete);
+router.delete('/delete', ChambreCtr.delete);
 
 //add new bedroom
 router.post('/add', ChambreCtr.add);

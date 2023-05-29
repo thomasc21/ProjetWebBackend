@@ -8,17 +8,18 @@ exports.signup = (req, res, next) => {
         const id = req.body.idusers;
         const pass = req.body.password;
         const passHash = bcrypt.hashSync(pass, 10);
-        db.queryData('select * from users ', function (result) {
+        db.query('select * from users ',  (err,result)=> {
             var nbuser = result.length;
             try{
-                db.queryData('INSERT into users (idusers,email,password) values (' + (nbuser + 1) + ',"' + id + '","' + passHash + '")', function (req) {
-                    if(req){
-                    // console.log("utilisateur ajouté");
-                        res.send("utilisateur ajouté");
+                db.query('INSERT into users (idusers,email,password) values (' + (nbuser + 1) + ',"' + id + '","' + passHash + '")', (err,req)=>{
+                    if (err) {
+                        console.log(err);
+                        console.log("erreur add user");
+                        res.send("erreur add user");
                     }
                     else{
-                    // console.log("erreur");
-                    res.send("erreur inscription");
+                        console.log("add user");
+                        res.send("Utilisateur ajouté");
                     }
                 }); 
             }
@@ -37,10 +38,10 @@ exports.login = async function (req, res) {
     console.log(id);
     //console.log(pass);
     try {
-    db.queryData(`SELECT idusers,password FROM users where email = "${id}"`, async function (result) {
+    db.query(`SELECT idusers,password FROM users where email = "${id}"`, async  (err,result)=> {
         //console.log(id);
         try {
-        if (!result) {
+        if (err) {
             res.send("Utilisateur non trouvé");
         }
         else {
@@ -88,32 +89,73 @@ exports.login = async function (req, res) {
 };
 
 exports.queryById = function (req, res) {
-    db.queryData(`SELECT * FROM users where email = ${req.body.idusers}`, function (result) {
+    db.query(`SELECT * FROM users where email = ${req.body.idusers}`,  (err,result)=> {
+        if (err) {
+            console.log(err);
+            console.log("erreur query user");
+            res.send("erreur query user");
+        }
+        else{
         res.send(result);
-        //console.log(result);
+        console.log("query user");
+        }
     });
 };
 
 
 
 exports.queryAll = function (req, res) {
-    db.queryData(`SELECT * FROM users`, function (result) {
+    db.query(`SELECT * FROM users`,  (err,result)=> {
+        if (err) {
+            console.log(err);
+            console.log("erreur query user");
+            res.send("erreur query user");
+        }
+        else{
         res.send(result);
-        //console.log(result);
+        console.log("query user");
+        }
     });
 };
 
 exports.delete = function (req, res) {
-    db.queryData(`DELETE FROM users WHERE idusers = ${req.body.idusers}`, function (result) {
+    db.query(`DELETE FROM users WHERE idusers = ${req.body.idusers}`,  (err,result) =>{
+        if (err) {
+            console.log(err);
+            console.log("erreur delete user");
+            res.send("erreur delete user");
+        }
+        else{
         res.send(result);
+        console.log("delete user");
+        }
     });
 }
 
-exports.update = function (req, res) {
-    const id = req.body.idusers;
-    const pass = req.body.password;
-    const passHash = bcrypt.hashSync(pass, 10);
-    db.queryData(`UPDATE users SET password = "${passHash}" WHERE idusers = ${req.body.idusers}`, function (result) {
-        res.send(result);
-    });
+
+
+
+exports.updatePassword = async function (req, res) {
+    try{
+    jwt.authenticateToken(req, res, async function (result) {
+            console.log(result);
+            const id = result.email;
+            const pass = req.body.password;
+            const passHash = bcrypt.hashSync(pass, 10);
+            db.query(`UPDATE users SET password = "${passHash}" WHERE email = "${id}"`,  (err,result) =>{
+                if (err) {
+                    console.log(err);
+                    console.log("erreur update user");
+                    res.send("erreur update user");
+                }
+                else{
+                res.send("update user");
+                console.log("update user");
+                }
+            });
+        });
+    }
+    catch(err){
+        console.log(err);
+    }
 }
