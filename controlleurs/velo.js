@@ -1,7 +1,15 @@
 const db = require('../db');
 
 exports.queryAll = function(req, res){
-    db.queryData(`SELECT * FROM velo`, function(result){
+    db.query(`SELECT * FROM velo`, (err,result)=>{
+        if (err) {
+            console.log(err);
+            console.log("erreur query velo");
+            res.send(err);
+        }
+        else{
         res.send(result);
+        console.log("query velo");
+        }
     });
 };
