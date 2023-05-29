@@ -32,7 +32,7 @@ exports.add = function(req,res){
             res.send(err);
         }
         //console.log(result);
-        res.send(result);
+        res.send("Réservation prise en compte");
         console.log("add chambre");
     }); //probleme avec les guillemets cast en string
     

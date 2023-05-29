@@ -24,7 +24,7 @@ exports.add = async function(req, res, next){
                     }
                     else{
                         console.log("add reservation chambre");
-                        res.send(result);
+                        res.send("add reservation chambre");
                     }
                 }); //probleme avec les guillemets cast en string
             }
@@ -40,7 +40,6 @@ exports.add = async function(req, res, next){
         console.log(err);
     }
 }
-
 
 exports.getReservation = async function(req, res){
     try{
@@ -97,7 +96,7 @@ try{
     //console.log(result);
     const id = result.email;
     //console.log(id);
-    await db.query(`DELETE FROM ReservationChambre WHERE idChambre = ${req.body.idChambre} and DATE =${req.body.date}`,(err,result)=>{
+    await db.query(`DELETE FROM ReservationChambre WHERE idChambre = "${req.body.idChambre}" and DATE ="${req.body.date}"`,(err,result)=>{
         if (err) {
             console.log(err);
             console.log("erreur delete reservation chambre");

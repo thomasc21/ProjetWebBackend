@@ -106,6 +106,7 @@ try{
         else{
         console.log("delete reservation Velo");
         res.send("delete reservation Velo");
+        //console.log(result);
         }
     });
     }
