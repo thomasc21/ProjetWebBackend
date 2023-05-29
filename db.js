@@ -1,35 +1,21 @@
-const e = require('express');
-var mysql = require('mysql');
-require('dotenv').config();
+const mysql = require('mysql2');
+const dotenv = require('dotenv');
+dotenv.config();
 
+const url = require('url');
+const dbUrl = process.env.DATABASE_URL; // assuming this is where you have stored the DSN
+const params = url.parse(dbUrl);
 
-var connectionPool = null;
 const connection = mysql.createConnection({
+      
          connectionLimit: 10,
-         host     : process.env.DB_HOST,
-         user     : process.env.DB_USER,
-         password : process.env.DB_PASS,
-         database: process.env.DB_NAME
-      })      
-module.exports = connection;
-// // ----------------------------------------------------
-// // ---------- SELECT / Query data
+         host: params.hostname,
+         user: params.auth.split(':')[0],
+         password: params.auth.split(':')[1],
+         database: params.pathname.slice(1),
+         port: params.port,
 
+      })   
+connection.exports = connection;
 
-
-// exports.queryData = async function(request,callback){
-//   try{
-//     getConnection().query(request,function(err,result){
-//          if(err) console.log(err);
-//          if (typeof callback === 'function') {
-//              callback(result);
-//          }
-//      });
-//  }
-//  catch(err){
-//       console.log(err);
-//   }
-// }
-
-
-//connection.end();*/
+     
